@@ -23,7 +23,7 @@ public class BarrierBlock_extendedUpdateSuppressionBlockMixin extends Block {
         if (CarpetSettings.updateSuppressionBlock != -1) {
             if (fromPos.equals(pos.up())) {
                 BlockState stateAbove = level.getBlockState(fromPos);
-                if (stateAbove.isOf(Blocks.ACTIVATOR_RAIL) && !stateAbove.get(PoweredRailBlock.POWERED)) {
+                if (stateAbove.isOf(Blocks.ACTIVATOR_RAIL)) {
                     NeighborUpdater updater = ((LevelInterface) level).getNeighborUpdater();
                     if (updater instanceof CollectingNeighborUpdaterAccessor cnua) {
                         level.scheduleBlockTick(pos, this, 1);
