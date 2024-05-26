@@ -9,7 +9,7 @@
 [![FX's Discord](https://img.shields.io/discord/636633673524969483?logo=discord&style=flat-square)](https://discord.gg/vurv5pdFpa)
 [![Hits Of Code](https://hitsofcode.com/github/fxmorin/carpet-fixes?branch=dev)](https://github.com/fxmorin/carpet-fixes)
 
-***NOTE***: The following is my attempt to be compatible with [EasterGhost's 1.20 update](https://github.com/EasterGhost/RailOptimization) of FX's Rail Optimization. Use at your own risk, I have no idea what I'm deleting. Best not to change any rules that have anything to do with rails.
+***NOTE***: The following is my attempt to be compatible with [EasterGhost's 1.20 update](https://modrinth.com/mod/railoptimization) of FX's Rail Optimization. Use at your own risk, I have no idea what I'm deleting. Best not to change any rules that have anything to do with rails.
 
 [Fabric Carpet](https://github.com/gnembon/fabric-carpet) extension mod which attempts to fix as many vanilla minecraft bugs as possible!
 
