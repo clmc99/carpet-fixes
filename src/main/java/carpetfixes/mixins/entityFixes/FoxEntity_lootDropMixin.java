@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.FoxEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,11 +26,11 @@ public abstract class FoxEntity_lootDropMixin extends AnimalEntity {
 
 
     @Inject(
-            method = "drop(Lnet/minecraft/entity/damage/DamageSource;)V",
+            method = "drop",
             at = @At("HEAD"),
             cancellable = true
     )
-    private void cf$onDrop(DamageSource source, CallbackInfo ci) {
+    private void cf$onDrop(ServerWorld world, DamageSource damageSource, CallbackInfo ci) {
         if (CFSettings.foxesDropItemsWithLootOffFix &&
                 !this.getWorld().getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
             ci.cancel();

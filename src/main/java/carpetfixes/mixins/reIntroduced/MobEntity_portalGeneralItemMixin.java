@@ -27,7 +27,7 @@ public abstract class MobEntity_portalGeneralItemMixin extends LivingEntity {
             method = "removeFromDimension",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/mob/MobEntity;getItemsEquipped()Ljava/lang/Iterable;",
+                    target = "Lnet/minecraft/entity/mob/MobEntity;getEquippedItems()Ljava/lang/Iterable;",
                     shift = At.Shift.BEFORE
             ),
             cancellable = true

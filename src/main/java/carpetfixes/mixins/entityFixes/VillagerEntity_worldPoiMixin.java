@@ -8,6 +8,7 @@ import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,15 +35,15 @@ public abstract class VillagerEntity_worldPoiMixin extends MerchantEntity {
 
 
     @Override
-    public Entity moveToWorld(ServerWorld destination) {
+    public Entity teleportTo(TeleportTarget destination) {
         if (CFSettings.villagersDontReleaseMemoryFix) {
             this.releaseAllTickets();
             this.getBrain().forget(MemoryModuleType.HOME);
             this.getBrain().forget(MemoryModuleType.JOB_SITE);
             this.getBrain().forget(MemoryModuleType.POTENTIAL_JOB_SITE);
             this.getBrain().forget(MemoryModuleType.MEETING_POINT);
-            this.reinitializeBrain(destination);
+            this.reinitializeBrain(destination.world());
         }
-        return super.moveToWorld(destination);
+        return super.teleportTo(destination);
     }
 }

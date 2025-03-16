@@ -101,12 +101,6 @@ public class CFSettings {
 
     //by FX - PR0CESS
     @Rule(
-            categories = {BUGFIX, RECOMMENDED}
-    )
-    public static boolean petsBreakLeadsDuringReloadFix = false;
-
-    //by FX - PR0CESS
-    @Rule(
             categories = {BUGFIX, EXPERIMENTAL}
     )
     public static boolean endermanDontUpdateOnPlaceFix = false;
@@ -154,29 +148,11 @@ public class CFSettings {
     public static boolean sleepingDelaysFallDamageFix = false;
 
     //by FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX}
-    )
-    public static boolean tntCantUseNetherPortalsFix = false;
-
-    //by FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX}
-    )
-    public static boolean fallingBlocksCantUseNetherPortalsFix = false;
-
-    //by FX - PR0CESS
     //Marked as vanilla since it does not change any behaviour, just keeps spawn chunks loaded
     @Rule(
             categories = {BUGFIX, VANILLA}
     )
     public static boolean spawnChunkEntitiesUnloadingFix = false;
-
-    //by FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX, RECOMMENDED}
-    )
-    public static boolean repairCostItemNotStackingFix = false;
 
     //By Skyrising
     @Rule(
@@ -311,12 +287,6 @@ public class CFSettings {
     @Rule(
             categories = {BUGFIX, RECOMMENDED}
     )
-    public static boolean soulSpeedIncorrectDamageFix = false;
-
-    //by FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX, RECOMMENDED}
-    )
     public static boolean endCrystalPlacingTooEarlyFix = false;
 
     //by FX - PR0CESS
@@ -354,12 +324,6 @@ public class CFSettings {
     @Rule(
             categories = {BUGFIX}
     )
-    public static boolean blackstoneButtonBreakSpeedFix = false;
-
-    //by FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX}
-    )
     public static boolean chestUsablePastWorldBorderFix = false;
 
     //by FX - PR0CESS
@@ -367,18 +331,6 @@ public class CFSettings {
             categories = {BUGFIX, VANILLA}
     )
     public static boolean itemFramePlaysSoundOnReadFix = false;
-
-    //by FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX, VANILLA, RECOMMENDED, CREATIVE}
-    )
-    public static boolean incorrectNbtChecks = false;
-
-    //by FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX, RECOMMENDED}
-    )
-    public static boolean endPortalRemovesEffectsFix = false;
 
     //by FX - PR0CESS
     @Rule(
@@ -712,12 +664,6 @@ public class CFSettings {
     @Rule(
             categories = {BUGFIX}
     )
-    public static boolean pistonUpdateOrderIsLocationalFix = false;
-
-    //By FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX}
-    )
     public static boolean missingObserverUpdatesFix = false;
 
     //By FX - PR0CESS
@@ -839,12 +785,6 @@ public class CFSettings {
             categories = {BUGFIX}
     )
     public static boolean hungerGoesDownInPeacefulFix = false;
-
-    //By FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX}
-    )
-    public static boolean crossDimensionTeleportLosesStatsFix = false;
 
     //By FX - PR0CESS
     @Rule(
@@ -1006,12 +946,6 @@ public class CFSettings {
     @Rule(
             categories = {BUGFIX}
     )
-    public static boolean sweepingIgnoresFireAspectFix = false;
-
-    //By FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX}
-    )
     public static boolean spawnInsideGatewayFix = false;
 
     //By FX - PR0CESS
@@ -1097,12 +1031,6 @@ public class CFSettings {
             categories = {BUGFIX}
     )
     public static boolean potionEffectsAffectDeadEntitiesFix = false;
-
-    //By FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX}
-    )
-    public static boolean obsidianPlatformDestroysBlocksFix = false;
 
     //By FX - PR0CESS
     @Rule(
@@ -1443,12 +1371,6 @@ public class CFSettings {
     I want to move these rules over to carpet-fixes
 
      */
-
-    //By FX - PR0CESS from fabric-carpet
-    @Rule(
-            categories = {BUGFIX}
-    )
-    public static boolean lightningKillsDropsFix = false;
 
     //By DeadlyMC from carpet-extra
     @Rule(

@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
@@ -39,8 +40,7 @@ public class SpawnEggItem_offsetAndOcclusionMixin {
             locals = LocalCapture.CAPTURE_FAILSOFT,
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;emitGameEvent(Lnet/minecraft/entity/Entity;" +
-                            "Lnet/minecraft/world/event/GameEvent;Lnet/minecraft/util/math/BlockPos;)V"
+                    target = "Lnet/minecraft/world/World;emitGameEvent(Lnet/minecraft/entity/Entity;Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/util/math/BlockPos;)V"
             )
     )
     private void cf$newEventCall(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir,
@@ -92,9 +92,8 @@ public class SpawnEggItem_offsetAndOcclusionMixin {
             method = "useOnBlock",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;emitGameEvent(Lnet/minecraft/entity/Entity;" +
-                            "Lnet/minecraft/world/event/GameEvent;Lnet/minecraft/util/math/BlockPos;)V"
+                    target = "Lnet/minecraft/world/World;emitGameEvent(Lnet/minecraft/entity/Entity;Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/util/math/BlockPos;)V"
             )
     )
-    private void cf$cancelEvent(World instance, Entity entity, GameEvent gameEvent, BlockPos blockPos) {}
+    private void cf$cancelEvent(World instance, Entity entity, RegistryEntry<GameEvent> registryEntry, BlockPos blockPos) {}
 }

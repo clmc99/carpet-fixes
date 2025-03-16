@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.BreakDoorGoal;
 import net.minecraft.entity.ai.goal.GoalSelector;
+import net.minecraft.entity.ai.goal.PrioritizedGoal;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
@@ -26,15 +27,14 @@ public abstract class MobEntity_stopGoalOnDeathMixin extends LivingEntity {
         super(entityType, world);
     }
 
-
     @Override
     protected void updatePostDeath() {
         if (CFSettings.doorBreakNotStoppedOnDeathFix && this.deathTime == 0 && !this.getWorld().isClient()) {
-            this.goalSelector.getRunningGoals().forEach((goal) -> {
-                if (goal.getGoal() instanceof BreakDoorGoal) {
+            for (PrioritizedGoal goal : this.goalSelector.getGoals()) {
+                if (goal.isRunning() && goal.getGoal() instanceof BreakDoorGoal) {
                     goal.stop();
                 }
-            });
+            }
         }
         super.updatePostDeath();
     }

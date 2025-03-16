@@ -31,7 +31,7 @@ public class CatSpawner_incorrectCatMixin {
             CatEntity catEntity = EntityType.CAT.create(world);
             if (catEntity != null) {
                 catEntity.refreshPositionAndAngles(pos, 0.0F, 0.0F);
-                catEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.NATURAL, null, null);
+                catEntity.initialize(world, world.getLocalDifficulty(pos), SpawnReason.NATURAL, null);
                 world.spawnEntityAndPassengers(catEntity);
                 cir.setReturnValue(1);
             } else {

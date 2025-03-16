@@ -2,9 +2,9 @@ package carpetfixes.mixins.entityFixes;
 
 import carpetfixes.CFSettings;
 import carpetfixes.patches.VillagerEntityInteraction;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityInteraction;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.InteractionObserver;
 import net.minecraft.entity.mob.ZombieVillagerEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.UUID;
 
@@ -31,10 +30,8 @@ public class ZombieVillagerEntity_offlinePlayerMixin {
     private @Nullable UUID converter;
 
 
-    @SuppressWarnings("all")
     @Inject(
             method = "finishConversion(Lnet/minecraft/server/world/ServerWorld;)V",
-            locals = LocalCapture.CAPTURE_FAILHARD,
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/server/world/ServerWorld;" +
@@ -42,8 +39,7 @@ public class ZombieVillagerEntity_offlinePlayerMixin {
                     shift = At.Shift.AFTER
             )
     )
-    private void cf$allowHandlingWithoutPlayer(ServerWorld world, CallbackInfo ci, VillagerEntity villagerEntity,
-                                               EquipmentSlot var3[], int var4, int var5) {
+    private void cf$allowHandlingWithoutPlayer(ServerWorld world, CallbackInfo ci, @Local VillagerEntity villagerEntity) {
         if (CFSettings.villagerDiscountIgnoresOfflinePlayersFix) {
             ((VillagerEntityInteraction)villagerEntity).onInteractionWith(
                     EntityInteraction.ZOMBIE_VILLAGER_CURED,

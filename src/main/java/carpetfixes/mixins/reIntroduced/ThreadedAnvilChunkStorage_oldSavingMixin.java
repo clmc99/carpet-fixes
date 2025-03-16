@@ -3,7 +3,7 @@ package carpetfixes.mixins.reIntroduced;
 import carpetfixes.CFSettings;
 import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
 import net.minecraft.server.world.ChunkHolder;
-import net.minecraft.server.world.ThreadedAnvilChunkStorage;
+import net.minecraft.server.world.ServerChunkLoadingManager;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.WorldChunk;
 import net.minecraft.world.chunk.WrapperProtoChunk;
@@ -21,7 +21,7 @@ import java.util.function.BooleanSupplier;
  * saving like before.
  */
 
-@Mixin(ThreadedAnvilChunkStorage.class)
+@Mixin(ServerChunkLoadingManager.class)
 public abstract class ThreadedAnvilChunkStorage_oldSavingMixin {
 
     // Does not seem to be required anymore
@@ -40,7 +40,7 @@ public abstract class ThreadedAnvilChunkStorage_oldSavingMixin {
     private void cf$reIntroduceOldMechanics(boolean flush, CallbackInfo ci) {
         if (CFSettings.reIntroduceOnlyAutoSaveSaving && !flush) {
             this.chunkHolders.values().stream().filter(ChunkHolder::isAccessible).forEach(holder -> {
-                Chunk chunk = holder.getSavingFuture().getNow(null);
+                Chunk chunk = (Chunk) holder.getSavingFuture().getNow(null);
                 if (chunk instanceof WrapperProtoChunk || chunk instanceof WorldChunk) {
                     this.save(chunk);
                     holder.updateAccessibleStatus();

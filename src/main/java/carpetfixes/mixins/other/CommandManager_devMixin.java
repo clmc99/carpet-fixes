@@ -33,11 +33,11 @@ public class CommandManager_devMixin {
     private void cf$onInit(CommandManager.RegistrationEnvironment environment,
                            CommandRegistryAccess arg, CallbackInfo ci) {
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            ResetChunksCommand.register(this.dispatcher);
+            //ResetChunksCommand.register(this.dispatcher); // Does not exist anymore?
             ChaseCommand.register(this.dispatcher);
             DebugMobSpawningCommand.register(this.dispatcher);
             DebugPathCommand.register(this.dispatcher);
-            RaidCommand.register(this.dispatcher);
+            RaidCommand.register(this.dispatcher, arg);
             PoiCommand.register(this.dispatcher); //Custom
             FillSummonCommand.register(this.dispatcher, arg); //Custom
         }

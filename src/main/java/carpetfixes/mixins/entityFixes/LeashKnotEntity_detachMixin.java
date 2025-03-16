@@ -1,6 +1,5 @@
 package carpetfixes.mixins.entityFixes;
 
-import carpetfixes.mixins.accessors.MobEntityAccessor;
 import carpetfixes.patches.LeashKnotDetach;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -27,7 +26,7 @@ public abstract class LeashKnotEntity_detachMixin extends Entity implements Leas
 
 
     @Override
-    public void onDetachLeash(MobEntity caller) {
+    public void carpet_fixes$onDetachLeash(MobEntity caller) {
         double d = 7.0;
         List<MobEntity> list = this.getWorld()
                 .getNonSpectatingEntities(
@@ -38,7 +37,7 @@ public abstract class LeashKnotEntity_detachMixin extends Entity implements Leas
             if (mobEntity == caller) {
                 continue;
             }
-            Entity holdingEntity = ((MobEntityAccessor)mobEntity).getHoldingEntity();
+            Entity holdingEntity = mobEntity.getLeashHolder();
             if (holdingEntity != null && holdingEntity == this) {
                 shouldDestroy = false;
                 break;

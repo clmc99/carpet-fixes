@@ -1,6 +1,7 @@
 package carpetfixes.mixins.entityFixes;
 
 import carpetfixes.CFSettings;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.entity.Entity;
@@ -32,9 +33,8 @@ public class PersistentProjectileEntity_piercingMixin {
                     shift = At.Shift.BEFORE
             )
     )
-    private void cf$onEndermanCheck(EntityHitResult entityHitResult, CallbackInfo ci, Entity entity, float f, int i,
-                                    @Share("lastEntity") LocalRef<Entity> lastEntityRef) {
-        lastEntityRef.set(entity);
+    private void cf$onEndermanCheck(EntityHitResult entityHitResult, CallbackInfo ci, @Local(ordinal = 0) Entity entity, @Share("entity2") LocalRef<Entity> entityRef) {
+        entityRef.set(entity);
     }
 
     @Redirect(
@@ -46,8 +46,8 @@ public class PersistentProjectileEntity_piercingMixin {
             )
     )
     private byte cf$skipForEnderman(PersistentProjectileEntity instance,
-                                    @Share("lastEntity") LocalRef<Entity> lastEntityRef) {
-        return CFSettings.endermanLowerPiercingFix ? lastEntityRef.get().getType() == EntityType.ENDERMAN ?
+                                    @Local(ordinal = 1) Entity lastEntityRef) {
+        return CFSettings.endermanLowerPiercingFix ? lastEntityRef.getType() == EntityType.ENDERMAN ?
                 0 :
                 instance.getPierceLevel() : instance.getPierceLevel();
     }

@@ -23,7 +23,6 @@ import java.util.function.BooleanSupplier;
 @Mixin(MinecraftServer.class)
 public class MinecraftServer_crashFixMixin {
 
-
     @Redirect(
             method = "tickWorlds",
             at = @At(

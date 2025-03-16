@@ -1,6 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.12-SNAPSHOT'
-	id 'io.github.juuxel.loom-quiltflower' version '1.7.1'
+	id 'fabric-loom' version '1.9-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -23,8 +22,8 @@ repositories {
     mavenCentral()
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_21
+targetCompatibility = JavaVersion.VERSION_21
 
 archivesBaseName = project.archives_base_name
 version = project.display_minecraft_version+'-'+project.mod_version
@@ -63,10 +62,8 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "carpet:fabric-carpet:${project.carpet_minecraft_version}-${project.carpet_core_version}"
 
-	include "com.github.Fallen-Breath:conditional-mixin:${project.conditionalmixin_version}"
-	modImplementation "com.github.Fallen-Breath:conditional-mixin:${project.conditionalmixin_version}"
-
-	include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixinextras_version}")))
+	modImplementation ("com.github.Fallen-Breath:conditional-mixin:${project.conditionalmixin_version}")
+	include ("com.github.Fallen-Breath:conditional-mixin:${project.conditionalmixin_version}")
 }
 
 processResources {
@@ -83,7 +80,7 @@ tasks.withType(JavaCompile).configureEach {
 	// see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 	// If Javadoc is generated, this must be specified in that task too.
 	it.options.encoding = "UTF-8"
-	it.options.release = 17
+	it.options.release = 21
 }
 
 java {

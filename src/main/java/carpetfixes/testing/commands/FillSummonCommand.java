@@ -6,7 +6,7 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.command.argument.NbtCompoundArgumentType;
-import net.minecraft.command.argument.RegistryEntryArgumentType;
+import net.minecraft.command.argument.RegistryEntryReferenceArgumentType;
 import net.minecraft.command.suggestion.SuggestionProviders;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -33,13 +33,13 @@ public class FillSummonCommand {
         dispatcher.register(
                 CommandManager.literal("fillsummon")
                         .requires(source -> source.hasPermissionLevel(2))
-                        .then(CommandManager.argument("entity", RegistryEntryArgumentType.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE))
+                        .then(CommandManager.argument("entity", RegistryEntryReferenceArgumentType.registryEntry(registryAccess, RegistryKeys.ENTITY_TYPE))
                                 .suggests(SuggestionProviders.SUMMONABLE_ENTITIES)
                                 .then(CommandManager.argument("fromPos", BlockPosArgumentType.blockPos())
                                         .then(CommandManager.argument("toPos", BlockPosArgumentType.blockPos())
                                                 .executes(context -> execute(
                                                         context.getSource(),
-                                                        RegistryEntryArgumentType.getSummonableEntityType(context, "entity"),
+                                                        RegistryEntryReferenceArgumentType.getSummonableEntityType(context, "entity"),
                                                         BlockPosArgumentType.getValidBlockPos(context, "fromPos"),
                                                         BlockPosArgumentType.getValidBlockPos(context, "toPos"),
                                                         new NbtCompound(),
@@ -48,7 +48,7 @@ public class FillSummonCommand {
                                                 .then(CommandManager.argument("nbt", NbtCompoundArgumentType.nbtCompound())
                                                         .executes(context -> execute(
                                                                 context.getSource(),
-                                                                RegistryEntryArgumentType.getSummonableEntityType(context, "entity"),
+                                                                RegistryEntryReferenceArgumentType.getSummonableEntityType(context, "entity"),
                                                                 BlockPosArgumentType.getValidBlockPos(context, "fromPos"),
                                                                 BlockPosArgumentType.getValidBlockPos(context, "toPos"),
                                                                 NbtCompoundArgumentType.getNbtCompound(context, "nbt"),
@@ -75,7 +75,6 @@ public class FillSummonCommand {
                         source.getWorld(),
                         source.getWorld().getLocalDifficulty(entity2.getBlockPos()),
                         SpawnReason.COMMAND,
-                        null,
                         null
                 );
             }

@@ -3,6 +3,7 @@ package carpetfixes.mixins.blockEntityFixes;
 import carpetfixes.CFSettings;
 import net.minecraft.block.entity.PistonBlockEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryWrapper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,7 +26,7 @@ public class PistonBlockEntity_lastProgressMixin {
 
 
     @Inject(
-            method = "readNbt(Lnet/minecraft/nbt/NbtCompound;)V",
+            method = "readNbt",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/nbt/NbtCompound;getBoolean(Ljava/lang/String;)Z",
@@ -33,7 +34,7 @@ public class PistonBlockEntity_lastProgressMixin {
                     ordinal = 0
             )
     )
-    private void cf$getLastProgress(NbtCompound nbt, CallbackInfo ci) {
+    private void cf$getLastProgress(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
         if (CFSettings.pistonReloadInconsistencyFix) {
             this.lastProgress = nbt.getFloat("lastProgress");
         }
@@ -41,7 +42,7 @@ public class PistonBlockEntity_lastProgressMixin {
 
 
     @ModifyConstant(
-            method = "writeNbt(Lnet/minecraft/nbt/NbtCompound;)V",
+            method = "writeNbt",
             constant = @Constant(stringValue = "progress")
     )
     private String cf$setLastProgress(String constant) {
@@ -50,7 +51,7 @@ public class PistonBlockEntity_lastProgressMixin {
 
 
     @Inject(
-            method = "writeNbt(Lnet/minecraft/nbt/NbtCompound;)V",
+            method = "writeNbt",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/nbt/NbtCompound;putFloat(Ljava/lang/String;F)V",
@@ -58,7 +59,7 @@ public class PistonBlockEntity_lastProgressMixin {
                     ordinal = 0
             )
     )
-    private void cf$setProgress(NbtCompound nbt, CallbackInfo ci) {
+    private void cf$setProgress(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
         if (CFSettings.pistonReloadInconsistencyFix) {
             nbt.putFloat("progress", this.progress);
         }

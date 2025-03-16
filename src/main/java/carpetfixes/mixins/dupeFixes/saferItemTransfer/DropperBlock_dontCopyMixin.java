@@ -17,8 +17,8 @@ import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(DropperBlock.class)
 public class DropperBlock_dontCopyMixin {
-
-
+// TODO: outdated?
+/*
     @Redirect(
             method = "dispense(Lnet/minecraft/server/world/ServerWorld;" +
                     "Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;)V",
@@ -39,7 +39,7 @@ public class DropperBlock_dontCopyMixin {
     private ItemStack cf$shouldCopyFirst(ItemStack itemStack, @Share("stack") LocalRef<ItemStack> stackRef) {
         stackRef.set(itemStack.copy());
         return CFSettings.saferItemTransfers ? itemStack : stackRef.get();
-    }
+    }*/
 
 
     @Redirect(

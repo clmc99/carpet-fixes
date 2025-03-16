@@ -1,7 +1,7 @@
 package carpetfixes.mixins.coreSystemFixes;
 
 import carpetfixes.CFSettings;
-import net.minecraft.server.world.ThreadedAnvilChunkStorage;
+import net.minecraft.server.world.ServerChunkLoadingManager;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -14,7 +14,7 @@ import java.util.function.BooleanSupplier;
  * Keeps track of chunk ticks phases for the chunk saving
  */
 
-@Mixin(ThreadedAnvilChunkStorage.class)
+@Mixin(ServerChunkLoadingManager.class)
 public class ThreadedAnvilChunkStorage_tickSaveMixin {
 
 
@@ -22,7 +22,7 @@ public class ThreadedAnvilChunkStorage_tickSaveMixin {
             method = "unloadChunks",
             at = @At(
                     value = "FIELD",
-                    target = "Lnet/minecraft/server/world/ThreadedAnvilChunkStorage;" +
+                    target = "Lnet/minecraft/server/world/ServerChunkLoadingManager;" +
                             "chunkHolders:Lit/unimi/dsi/fastutil/longs/Long2ObjectLinkedOpenHashMap;",
                     opcode = Opcodes.GETFIELD,
                     shift = At.Shift.BEFORE

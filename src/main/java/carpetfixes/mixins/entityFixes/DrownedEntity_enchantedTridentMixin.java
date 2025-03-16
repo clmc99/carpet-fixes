@@ -1,9 +1,7 @@
 package carpetfixes.mixins.entityFixes;
 
 import carpetfixes.CFSettings;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.mob.ZombieEntity;
@@ -14,8 +12,6 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-
-import java.util.Map;
 
 /**
  * The trident wielding Drowned, do not actually use the enchantments that are on the tridents.
@@ -43,10 +39,8 @@ public class DrownedEntity_enchantedTridentMixin extends ZombieEntity {
         ItemStack trident = new ItemStack(item);
         if (CFSettings.drownedEnchantedTridentsFix) {
             ItemStack holding = this.getActiveItem();
-            if (holding.getItem() == Items.TRIDENT) {
-                Map<Enchantment, Integer> enchantments = EnchantmentHelper.get(holding);
-                enchantments.remove(Enchantments.LOYALTY);
-                EnchantmentHelper.set(enchantments, trident);
+            if (holding.getItem() == Items.TRIDENT && holding.hasEnchantments()) {
+                trident.set(DataComponentTypes.ENCHANTMENTS, holding.getEnchantments());
             }
         }
         return trident;

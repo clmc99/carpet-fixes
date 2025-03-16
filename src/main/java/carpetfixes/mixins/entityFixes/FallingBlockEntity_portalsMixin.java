@@ -28,9 +28,6 @@ public abstract class FallingBlockEntity_portalsMixin extends Entity {
             at = @At("HEAD")
     )
     private void cf$tickNetherPortal(CallbackInfo ci) {
-        if (CFSettings.fallingBlocksCantUseNetherPortalsFix) {
-            this.tickPortal();
-        }
         if (CFSettings.fallingBlocksCantReuseGatewaysFix) {
             this.tickPortalCooldown();
         }

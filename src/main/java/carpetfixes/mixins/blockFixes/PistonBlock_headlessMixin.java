@@ -49,12 +49,10 @@ public abstract class PistonBlock_headlessMixin extends FacingBlock {
 
 
     @Inject(
-            method = "tryMove(Lnet/minecraft/world/World;" +
-                    "Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V",
+            method = "tryMove",
             at = @At(
                     value = "INVOKE_ASSIGN",
-                    target = "Lnet/minecraft/block/PistonBlock;shouldExtend(Lnet/minecraft/world/RedstoneView;" +
-                            "Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;)Z",
+                    target = "Lnet/minecraft/block/PistonBlock;shouldExtend(Lnet/minecraft/world/RedstoneView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/Direction;)Z",
                     shift = At.Shift.AFTER
             ),
             cancellable = true

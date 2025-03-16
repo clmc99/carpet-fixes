@@ -22,8 +22,7 @@ public class ChorusFruitItem_fallDamageMixin {
             method = "finishUsing",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;emitGameEvent(Lnet/minecraft/world/event/GameEvent;" +
-                            "Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/world/event/GameEvent$Emitter;)V"
+                    target = "Lnet/minecraft/world/World;emitGameEvent(Lnet/minecraft/registry/entry/RegistryEntry;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/world/event/GameEvent$Emitter;)V"
             )
     )
     private void cf$finishUsing(ItemStack stack, World world, LivingEntity user,

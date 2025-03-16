@@ -5,6 +5,7 @@ import carpetfixes.mixins.accessors.LivingEntityAccessor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.registry.entry.RegistryEntry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,11 +32,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class StatusEffectInstance_wrongEffectMixin {
 
     @Shadow
-    public abstract StatusEffect getEffectType();
-
-    @Shadow
     public abstract int getAmplifier();
 
+
+    @Shadow public abstract RegistryEntry<StatusEffect> getEffectType();
 
     @Inject(
             method = "update(Lnet/minecraft/entity/LivingEntity;Ljava/lang/Runnable;)Z",
@@ -49,7 +49,7 @@ public abstract class StatusEffectInstance_wrongEffectMixin {
     private void cf$addHere(LivingEntity entity, Runnable overwriteCallback, CallbackInfoReturnable<Boolean> cir) {
         if (CFSettings.brokenHiddenStatusEffectFix) {
             ((LivingEntityAccessor)entity).setEffectsChanged(true);
-            this.getEffectType().onRemoved(entity.getAttributes());
+            this.getEffectType().value().onRemoved(entity.getAttributes());
         }
     }
 
@@ -63,7 +63,7 @@ public abstract class StatusEffectInstance_wrongEffectMixin {
     )
     private void cf$removeHere(LivingEntity entity, Runnable overwriteCallback, CallbackInfoReturnable<Boolean> cir) {
         if (CFSettings.brokenHiddenStatusEffectFix) {
-            this.getEffectType().onApplied(entity.getAttributes(), this.getAmplifier());
+            this.getEffectType().value().onApplied(entity.getAttributes(), this.getAmplifier());
         }
     }
 

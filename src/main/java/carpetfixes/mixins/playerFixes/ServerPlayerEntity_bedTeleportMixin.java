@@ -5,8 +5,8 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,13 +26,13 @@ public abstract class ServerPlayerEntity_bedTeleportMixin extends PlayerEntity {
 
 
     @Inject(
-            method = "moveToWorld",
+            method = "teleportTo",
             at = @At("HEAD"),
             cancellable = true
     )
-    private void cf$moveToWorldIfNotSleeping(ServerWorld destination, CallbackInfoReturnable<Entity> cir) {
+    private void cf$moveToWorldIfNotSleeping(TeleportTarget teleportTarget, CallbackInfoReturnable<Entity> cir) {
         if (CFSettings.bedTeleportExploitFix && this.isSleeping()) {
-            cir.setReturnValue(this);
+            cir.cancel();
         }
     }
 }

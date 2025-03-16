@@ -22,12 +22,11 @@ public abstract class LivingEntity_bedTeleportMixin extends Entity {
         super(type, world);
     }
 
-
     @Override
-    protected void tickPortal() {
+    protected void tickPortalTeleportation() {
         if (CFSettings.bedTeleportExploitFix && this.isSleeping()) {
             return;
         }
-        super.tickPortal();
+        super.tickPortalTeleportation();
     }
 }

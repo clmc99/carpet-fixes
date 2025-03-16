@@ -49,7 +49,7 @@ public abstract class EnderPearlEntity_clipMixin extends ThrownItemEntity {
             }
             EntityDimensions dimensions = owner.getDimensions(owner.getPose());
             if (blockHitResult.getSide() == Direction.DOWN) {
-                this.setPos(this.getX(), (this.getY() - dimensions.height / 2) + 0.5, this.getZ());
+                this.setPos(this.getX(), (this.getY() - dimensions.height() / 2) + 0.5, this.getZ());
             }
             Vec3d blockBoundPos = new Vec3d(
                     Math.floor(this.getX()) + 0.5,

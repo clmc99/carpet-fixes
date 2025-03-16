@@ -54,9 +54,6 @@ public abstract class Entity_dimensionsMixin implements ExtendedEntity {
     public abstract EntityDimensions getDimensions(EntityPose pose);
 
     @Shadow
-    protected abstract float getEyeHeight(EntityPose pose, EntityDimensions dimensions);
-
-    @Shadow
     public abstract Vec3d getPos();
 
     @Shadow
@@ -71,9 +68,9 @@ public abstract class Entity_dimensionsMixin implements ExtendedEntity {
     @Shadow
     private boolean onGround;
 
-    @Shadow
-    private float stepHeight;
+    @Shadow public abstract float getEyeHeight(EntityPose pose);
 
+    @Shadow public abstract float getStepHeight();
 
     @Override
     public void calculateDimensionsWithoutHeight() {
@@ -81,25 +78,25 @@ public abstract class Entity_dimensionsMixin implements ExtendedEntity {
         EntityPose entityPose = this.getPose();
         EntityDimensions dim2 = this.getDimensions(entityPose);
         this.dimensions = dim2;
-        this.standingEyeHeight = this.getEyeHeight(entityPose, dim2);
+        this.standingEyeHeight = this.getEyeHeight(entityPose);
         this.refreshPosition();
         Entity self = (Entity)(Object)this;
         if ( // Skip calculating the new dimensions if conditions are not met
                 !this.world.isClient
                 && !this.firstUpdate
                 && !this.noClip
-                && (double)dim2.width <= 4.0 && (double)dim2.height <= 4.0
-                && (dim2.width > dim.width || dim2.height > dim.height)
+                && (double)dim2.width() <= 4.0 && (double)dim2.height() <= 4.0
+                && (dim2.width() > dim.width() || dim2.height() > dim.height())
                 && !(self instanceof PlayerEntity)
         ) {
-            Vec3d vec3d = this.getPos().add(0.0, (double)dim.height / 2.0, 0.0); // Add half the height
-            double d = (double)Math.max(0.0F, dim2.width - dim.width) + 1.0E-6; // Get change in width
-            double e = (double)Math.max(0.0F, dim2.height - dim.height) + 1.0E-6; // Get change in height
+            Vec3d vec3d = this.getPos().add(0.0, (double)dim.height() / 2.0, 0.0); // Add half the height
+            double d = (double)Math.max(0.0F, dim2.width() - dim.width()) + 1.0E-6; // Get change in width
+            double e = (double)Math.max(0.0F, dim2.height() - dim.height()) + 1.0E-6; // Get change in height
             VoxelShape voxelShape = VoxelShapes.cuboid(Box.of(vec3d, d, e, d));
             // Don't check height by using original dim.height instead of dim2.height here
             double lowerHeight = this.world.isTopSolid(this.blockPos.down(),self) ?
-                    (double)(-dim.height) / 2.0 : (double)(-dim2.height) / 2.0;
-            this.world.findClosestCollision(self, voxelShape, vec3d, dim2.width, dim.height, dim2.width)
+                    (double)(-dim.height()) / 2.0 : (double)(-dim2.height()) / 2.0;
+            this.world.findClosestCollision(self, voxelShape, vec3d, dim2.width(), dim.height(), dim2.width())
                     .ifPresent(pos -> this.setPosition(pos.add(0.0, lowerHeight, 0.0)));
         }
     }
@@ -113,15 +110,15 @@ public abstract class Entity_dimensionsMixin implements ExtendedEntity {
         this.refreshPosition();
         Entity self = (Entity)(Object)this;
         if (!this.world.isClient
-                && (double)dim2.width <= 4.0 && (double)dim2.height <= 4.0
-                && (dim2.width > dim.width || dim2.height > dim.height)
+                && (double)dim2.width() <= 4.0 && (double)dim2.height() <= 4.0
+                && (dim2.width() > dim.width() || dim2.height() > dim.height())
                 && !(self instanceof PlayerEntity)) {
             Vec3d vec3d = this.getPos();
-            double d = (double)Math.max(0.0F, dim2.width - dim.width) + 1.0E-6;
-            double e = (double)Math.max(0.0F, dim2.height - dim.height) + 1.0E-6;
+            double d = (double)Math.max(0.0F, dim2.width() - dim.width()) + 1.0E-6;
+            double e = (double)Math.max(0.0F, dim2.height() - dim.height()) + 1.0E-6;
             VoxelShape voxelShape = VoxelShapes.cuboid(Box.of(vec3d, d, e, d));
             this.world
-                    .findClosestCollision(self, voxelShape, vec3d, dim2.width, dim2.height, dim2.width)
+                    .findClosestCollision(self, voxelShape, vec3d, dim2.width(), dim2.height(), dim2.width())
                     .ifPresent(this::setPosition);
         }
     }
@@ -140,11 +137,11 @@ public abstract class Entity_dimensionsMixin implements ExtendedEntity {
         boolean yChanged = movement.y != vec3d.y;
         boolean zChanged = movement.z != vec3d.z;
         boolean groundCollisions = this.onGround || yChanged && movement.y < 0.0;
-        if (this.stepHeight > 0.0F && groundCollisions && (xChanged || zChanged)) {
+        if (this.getStepHeight() > 0.0F && groundCollisions && (xChanged || zChanged)) {
             Vec3d vec3d2 = cf$adjustMovementForCollisionsAtPos(
                     self,
                     pos,
-                    new Vec3d(movement.x, this.stepHeight, movement.z),
+                    new Vec3d(movement.x, this.getStepHeight(), movement.z),
                     box,
                     this.world,
                     entityCollisionsList
@@ -152,12 +149,12 @@ public abstract class Entity_dimensionsMixin implements ExtendedEntity {
             Vec3d vec3d3 = cf$adjustMovementForCollisionsAtPos(
                     self,
                     pos,
-                    new Vec3d(0.0, this.stepHeight, 0.0),
+                    new Vec3d(0.0, this.getStepHeight(), 0.0),
                     box.stretch(movement.x, 0.0, movement.z),
                     this.world,
                     entityCollisionsList
             );
-            if (vec3d3.y < (double)this.stepHeight) {
+            if (vec3d3.y < (double)this.getStepHeight()) {
                 Vec3d vec3d4 = cf$adjustMovementForCollisionsAtPos(
                         self,
                         pos,

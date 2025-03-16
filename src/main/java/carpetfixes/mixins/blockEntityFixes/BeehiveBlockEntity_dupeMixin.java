@@ -25,11 +25,11 @@ public abstract class BeehiveBlockEntity_dupeMixin extends BlockEntity {
 
 
     @Inject(
-            method = "tryEnterHive(Lnet/minecraft/entity/Entity;ZI)V",
+            method = "tryEnterHive",
             at = @At("HEAD"),
             cancellable = true
     )
-    private void cf$tryEnterHiveIfLoaded(Entity entity, boolean hasNectar, int ticksInHive, CallbackInfo ci) {
+    private void cf$tryEnterHiveIfLoaded(Entity entity, CallbackInfo ci) {
         if (CFSettings.beeDupeFix && !entity.getWorld().isChunkLoaded(
                 ChunkSectionPos.getSectionCoord(this.pos.getX()),
                 ChunkSectionPos.getSectionCoord(this.pos.getY())

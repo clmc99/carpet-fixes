@@ -35,7 +35,7 @@ public abstract class CreeperEntity_fuseMixin extends HostileEntity {
         nbtCompound.remove("Dimension");
         this.readNbt(nbtCompound);
         this.portalCooldown = original.portalCooldown;
-        this.lastNetherPortalPosition = original.lastNetherPortalPosition;
+        this.portalManager = original.portalManager;
         if (CFSettings.creeperPortalFuseResetsFix) {
             CreeperEntity self = (CreeperEntity) original;
             this.lastFuseTime = self.lastFuseTime;

@@ -38,8 +38,7 @@ public abstract class SlimeEntity_conversionMixin extends MobEntity implements M
                 shift = At.Shift.AFTER
             )
     )
-    private void cf$conversionFixSlime(RemovalReason reason, CallbackInfo ci, int i, Text text, boolean bl,
-                                       float f, int j, int k, int l, float g, float h, SlimeEntity slimeEntity) {
+    private void cf$conversionFixSlime(RemovalReason reason, CallbackInfo ci, int i, Text text, boolean bl, float f, float g, int j, int k, int l, float h, float m, SlimeEntity slimeEntity) {
         if (CFSettings.conversionFix) {
             slimeEntity.setFireTicks(this.getFireTicks()); //Fire
             slimeEntity.setVelocity(this.getVelocity()); //Motion

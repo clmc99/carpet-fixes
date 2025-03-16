@@ -2,9 +2,9 @@ package carpetfixes.mixins.blockUpdates.duplicateUpdates;
 
 import carpetfixes.CFSettings;
 import carpetfixes.helpers.BlockUpdateUtils;
+import net.minecraft.block.AbstractTorchBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.RedstoneTorchBlock;
-import net.minecraft.block.AbstractTorchBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;

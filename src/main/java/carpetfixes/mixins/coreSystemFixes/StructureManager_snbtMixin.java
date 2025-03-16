@@ -36,27 +36,21 @@ import static carpetfixes.CarpetFixesServer.LOGGER;
 
 @Mixin(StructureTemplateManager.class)
 public abstract class StructureManager_snbtMixin {
-
     @Shadow
     @Final
     private Path generatedPath;
 
     @Shadow
-    private static Path getAndCheckTemplatePath(Path path, Identifier id, String extension) {
-        return null;
-    }
-
-    @Shadow
     public abstract StructureTemplate createTemplate(NbtCompound nbt);
 
+
+    @Shadow public abstract Path getTemplatePath(Identifier id, String extension);
 
     @Inject(
             method = "loadTemplateFromFile(Lnet/minecraft/util/Identifier;)Ljava/util/Optional;",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/structure/StructureTemplateManager;getAndCheckTemplatePath(" +
-                            "Ljava/nio/file/Path;Lnet/minecraft/util/Identifier;Ljava/lang/String;)" +
-                            "Ljava/nio/file/Path;"
+                    target = "Lnet/minecraft/structure/StructureTemplateManager;getTemplatePath(Lnet/minecraft/util/Identifier;Ljava/lang/String;)Ljava/nio/file/Path;"
             )
     )
     private void cf$onLoadStructureFromFileReturn(
@@ -83,7 +77,7 @@ public abstract class StructureManager_snbtMixin {
             Identifier id = idRef.get();
             if (id != null && this.generatedPath.toFile().isDirectory()) {
                 if (this.generatedPath.toFile().isDirectory()) {
-                    Path path = getAndCheckTemplatePath(this.generatedPath, id, ".snbt");
+                    Path path = getTemplatePath(id, ".snbt");
                     try {
                         returnValue = Optional.of(this.createTemplate(this.cf$toNbtCompound(path, id.getPath())));
                     } catch (FileNotFoundException ignored) {

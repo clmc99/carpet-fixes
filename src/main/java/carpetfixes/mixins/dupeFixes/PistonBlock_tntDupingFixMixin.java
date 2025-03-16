@@ -1,13 +1,13 @@
 package carpetfixes.mixins.dupeFixes;
 
 import carpetfixes.CFSettings;
+import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.PistonBlock;
-import net.minecraft.block.piston.PistonHandler;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 import java.util.Map;
@@ -37,29 +36,30 @@ import java.util.Map;
 public abstract class PistonBlock_tntDupingFixMixin {
 
 
-    @SuppressWarnings("all")
     @Inject(
-        method = "move",
-        slice = @Slice(
-            from = @At(
-                value = "INVOKE",
-                target = "Lnet/minecraft/block/BlockState;hasBlockEntity()Z"
+            method = "move",
+            slice = @Slice(
+                    from = @At(
+                            value = "INVOKE",
+                            target = "Lnet/minecraft/block/BlockState;hasBlockEntity()Z"
+                    )
+            ),
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/util/List;size()I",
+                    shift = At.Shift.AFTER,  // to make sure this will be injected after onMove in PistonBlock_movableTEMixin in fabric-carpet
+                    ordinal = 0
             )
-        ),
-        at = @At(
-            value = "INVOKE",
-            target = "Ljava/util/List;size()I",
-            shift = At.Shift.AFTER,  // To make sure this will be injected after onMove in movableBEMixin in carpet
-            ordinal = 0
-        ),
-        locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void cf$setAllToBeMovedBlockToAirFirst(World world, BlockPos pos, Direction dir, boolean retract,
-                                                   CallbackInfoReturnable<Boolean> cir, BlockPos blockPos,
-                                                   PistonHandler pistonHandler, Map<BlockPos, BlockState> map,
-                                                   List<BlockPos> list, List<BlockState> list2, List<BlockPos> list3,
-                                                   BlockState blockStates[], Direction direction, int j,
-                                                   @Share("isFixed") LocalBooleanRef isFixedRef) {
+    @SuppressWarnings("all")
+    private void cf$setAllToBeMovedBlockToAirFirst(
+            World world, BlockPos pos, Direction dir, boolean retract,
+            CallbackInfoReturnable<Boolean> cir,
+            @Local Map<BlockPos, BlockState> map,
+            @Local(ordinal = 0) List<BlockPos> list,  // pistonHandler.getMovedBlocks()
+            @Local(ordinal = 1) List<BlockState> list2,   // states of list
+            @Share("isFixed") LocalBooleanRef isFixedRef
+    ) {
         // just in case the rule gets changed halfway
         isFixedRef.set(CFSettings.pistonDupingFix);
 
@@ -103,29 +103,31 @@ public abstract class PistonBlock_tntDupingFixMixin {
      *
      * Whatever, just make it behave like vanilla
      */
-    @SuppressWarnings("all")
     @Inject(
-        method = "move",
-        slice = @Slice(
-            from = @At(
-                value = "FIELD",
-                target = "Lnet/minecraft/block/PistonBlock;sticky:Z"
+            method = "move",
+            slice = @Slice(
+                    from = @At(
+                            value = "FIELD",
+                            target = "Lnet/minecraft/block/PistonBlock;sticky:Z"
+                    )
+            ),
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/util/Map;keySet()Ljava/util/Set;",
+                    ordinal = 0
             )
-        ),
-        at = @At(
-            value = "INVOKE",
-            target = "Ljava/util/Map;keySet()Ljava/util/Set;",
-            ordinal = 0
-        ),
-        locals = LocalCapture.CAPTURE_FAILHARD
     )
-    private void cf$makeSureStatesInBlockStatesIsCorrect(World world, BlockPos pos, Direction dir, boolean retract,
-                                                         CallbackInfoReturnable<Boolean> cir, BlockPos blockPos,
-                                                         PistonHandler pistonHandler, Map<BlockPos, BlockState> map,
-                                                         List<BlockPos> list, List<BlockState> list2,
-                                                         List<BlockPos> list3, BlockState[] blockStates,
-                                                         BlockState blockState6,
-                                                         @Share("isFixed") LocalBooleanRef isFixedRef) {
+    private void cf$makeSureStatesInBlockStatesIsCorrect(
+            World world, BlockPos pos, Direction dir, boolean retract,
+            CallbackInfoReturnable<Boolean> cir,
+            @Local(ordinal = 0) List<BlockPos> list,
+            @Local(ordinal = 1) List<BlockState> list2,
+            @Local(ordinal = 2) List<BlockPos> list3,
+            @Local BlockState[] blockStates,
+            @Local(ordinal = 0) int j,
+            @Share("isFixed") LocalBooleanRef isFixedRef
+    )
+    {
         if (isFixedRef.get()) {
             // since blockState8 = world.getBlockState(blockPos4) always return AIR due to the changes above
             // some states value in blockStates array need to be corrected

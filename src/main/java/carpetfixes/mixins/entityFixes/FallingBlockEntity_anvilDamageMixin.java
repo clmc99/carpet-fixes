@@ -39,7 +39,7 @@ public abstract class FallingBlockEntity_anvilDamageMixin extends Entity {
     @Unique
     private Box cf$calculateBoundsForPos(BlockPos pos) {
         EntityDimensions entityDimensions = this.getDimensions(this.getPose());
-        float half = entityDimensions.width / 2.0F;
+        float half = entityDimensions.width() / 2.0F;
         Vec3d min = new Vec3d(
                 pos.getX() - (double)half,
                 pos.getY(),
@@ -47,7 +47,7 @@ public abstract class FallingBlockEntity_anvilDamageMixin extends Entity {
         );
         Vec3d max = new Vec3d(
                 pos.getX() + (double)half,
-                pos.getY() + (double)entityDimensions.height,
+                pos.getY() + (double)entityDimensions.height(),
                 pos.getZ() + (double)half
         );
         return new Box(min, max);

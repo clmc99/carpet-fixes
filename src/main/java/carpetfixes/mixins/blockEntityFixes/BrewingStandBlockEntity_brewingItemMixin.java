@@ -5,6 +5,7 @@ import net.minecraft.block.entity.BrewingStandBlockEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,9 +29,9 @@ public class BrewingStandBlockEntity_brewingItemMixin {
             method = "readNbt",
             at = @At("TAIL")
     )
-    private void cf$readNbt(NbtCompound nbt, CallbackInfo ci) {
+    private void cf$readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
         if (CFSettings.brewingResetsOnUnloadFix) {
-            this.itemBrewing = Registries.ITEM.get(new Identifier(nbt.getString("itemBrewing")));
+            this.itemBrewing = Registries.ITEM.get(Identifier.of(nbt.getString("itemBrewing")));
         }
     }
 
@@ -39,7 +40,7 @@ public class BrewingStandBlockEntity_brewingItemMixin {
             method = "writeNbt",
             at = @At("TAIL")
     )
-    private void cf$writeNbt(NbtCompound nbt, CallbackInfo ci) {
+    private void cf$writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup, CallbackInfo ci) {
         if (CFSettings.brewingResetsOnUnloadFix) {
             nbt.putString("itemBrewing", Registries.ITEM.getId(this.itemBrewing).toString());
         }

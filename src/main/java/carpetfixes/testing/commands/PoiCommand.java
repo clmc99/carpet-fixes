@@ -39,7 +39,7 @@ public class PoiCommand {
     private static int executeTotalChunks(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
         ServerWorld world = source.getWorld();
-        PointOfInterestStorage poiStorage = ((ThreadedAnvilChunkStorageAccessor) world.getChunkManager().threadedAnvilChunkStorage).getPoiStorage();
+        PointOfInterestStorage poiStorage = ((ThreadedAnvilChunkStorageAccessor) world.getChunkManager().chunkLoadingManager).getPoiStorage();
         int totalChunks = ((RegionBasedStorageLeak<?>)poiStorage).getTotalElements();
         source.sendFeedback(() -> Text.of("There are currently "+totalChunks+" loaded poi chunks!"), false);
         return 0;
@@ -49,7 +49,7 @@ public class PoiCommand {
         ServerCommandSource source = context.getSource();
         BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "blockpos");
         ServerWorld world = source.getWorld();
-        PointOfInterestStorage poiStorage = ((ThreadedAnvilChunkStorageAccessor) world.getChunkManager().threadedAnvilChunkStorage).getPoiStorage();
+        PointOfInterestStorage poiStorage = ((ThreadedAnvilChunkStorageAccessor) world.getChunkManager().chunkLoadingManager).getPoiStorage();
         Optional<RegistryEntry<PointOfInterestType>> optionalType = poiStorage.getType(pos);
         if (optionalType.isPresent()) {
             source.sendFeedback(() -> Text.of(optionalType.get().getType().toString()), false);
@@ -63,7 +63,7 @@ public class PoiCommand {
         ServerCommandSource source = context.getSource();
         BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "blockpos");
         ServerWorld world = source.getWorld();
-        PointOfInterestStorage poiStorage = ((ThreadedAnvilChunkStorageAccessor) world.getChunkManager().threadedAnvilChunkStorage).getPoiStorage();
+        PointOfInterestStorage poiStorage = ((ThreadedAnvilChunkStorageAccessor) world.getChunkManager().chunkLoadingManager).getPoiStorage();
         Optional<RegistryEntry<PointOfInterestType>> optionalType = poiStorage.getType(pos);
         if (optionalType.isPresent()) {
             source.sendFeedback(() -> Text.of("Removed POI - "+optionalType.get()), false);

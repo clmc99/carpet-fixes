@@ -1,7 +1,7 @@
 package carpetfixes.helpers;
 
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Pair;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
@@ -16,11 +16,11 @@ public class DelayedWorldEventManager {
 
     private static final HashMap<World,List<Pair<Integer,DelayedWorldEvent>>> delayedWorldEvents = new HashMap<>();
 
-    public static void addDelayedWorldEvent(World world, GameEvent gameEvent, Vec3d emitterPos, GameEvent.Emitter emitter) {
+    public static void addDelayedWorldEvent(World world, RegistryEntry<GameEvent> gameEvent, Vec3d emitterPos, GameEvent.Emitter emitter) {
         addDelayedWorldEvent(world, gameEvent, emitterPos, emitter, 1);
     }
 
-    public static void addDelayedWorldEvent(World world, GameEvent gameEvent, Vec3d emitterPos, GameEvent.Emitter emitter, int delay) {
+    public static void addDelayedWorldEvent(World world, RegistryEntry<GameEvent> gameEvent, Vec3d emitterPos, GameEvent.Emitter emitter, int delay) {
         delayedWorldEvents.computeIfAbsent(world,(a) -> new ArrayList<>())
                 .add(new Pair<>(delay, new DelayedWorldEvent(gameEvent, emitterPos, emitter)));
     }
@@ -40,11 +40,11 @@ public class DelayedWorldEventManager {
 
     static class DelayedWorldEvent {
 
-        private final GameEvent event;
+        private final RegistryEntry<GameEvent> event;
         private final Vec3d emitterPos;
         private final GameEvent.Emitter emitter;
 
-        DelayedWorldEvent(GameEvent event, Vec3d emitterPos, GameEvent.Emitter emitter) {
+        DelayedWorldEvent(RegistryEntry<GameEvent> event, Vec3d emitterPos, GameEvent.Emitter emitter) {
             this.event = event;
             this.emitterPos = emitterPos;
             this.emitter = emitter;

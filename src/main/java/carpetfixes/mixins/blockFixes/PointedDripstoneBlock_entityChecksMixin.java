@@ -7,11 +7,13 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import static net.minecraft.block.PointedDripstoneBlock.THICKNESS;
 import static net.minecraft.block.PointedDripstoneBlock.VERTICAL_DIRECTION;
@@ -21,17 +23,26 @@ import static net.minecraft.block.PointedDripstoneBlock.VERTICAL_DIRECTION;
  */
 
 @Mixin(PointedDripstoneBlock.class)
-public class PointedDripstoneBlock_entityChecksMixin extends Block {
+public abstract class PointedDripstoneBlock_entityChecksMixin extends Block {
+
+    @Shadow
+    @Nullable
+    private static Direction getDirectionToPlaceAt(WorldView world, BlockPos pos, Direction direction) {
+        return null;
+    }
+
+    @Shadow
+    private static Thickness getThickness(WorldView world, BlockPos pos, Direction direction, boolean tryMerge) {
+        return null;
+    }
 
     public PointedDripstoneBlock_entityChecksMixin(Settings settings) {
         super(settings);
     }
 
 
-    @SuppressWarnings("InvalidInjectorMethodSignature")
     @Inject(
             method = "getPlacementState",
-            locals = LocalCapture.CAPTURE_FAILHARD,
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;" +
@@ -40,11 +51,15 @@ public class PointedDripstoneBlock_entityChecksMixin extends Block {
             ),
             cancellable = true
     )
-    private void cf$canPlaceDripstone(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir,
-                                      WorldAccess world, BlockPos pos, Direction dir,
-                                      Direction dir2, boolean bl, Thickness thickness) {
+    private void cf$canPlaceDripstone(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
+        WorldAccess world = ctx.getWorld();
+        BlockPos blockPos = ctx.getBlockPos();
+        Direction direction = ctx.getVerticalPlayerLookDirection().getOpposite();
+        Direction dir2 = getDirectionToPlaceAt(world, blockPos, direction);
+        var thickness = getThickness(world, blockPos, dir2, !ctx.shouldCancelInteraction());
+
         if (CFSettings.dripstoneSkipsEntityCheckFix && thickness.ordinal() < 4) {
-            BlockPos moveDir = pos.offset(dir2.getOpposite());
+            BlockPos moveDir = blockPos.offset(dir2.getOpposite());
             if (world.getBlockState(moveDir).isOf(Blocks.POINTED_DRIPSTONE)) {
                 BlockState replaceState = this.getDefaultState().with(VERTICAL_DIRECTION, dir2)
                         .with(THICKNESS, Thickness.values()[thickness.ordinal() + 1]);
