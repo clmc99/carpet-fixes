@@ -1,5 +1,7 @@
 # Carpet-Fixes
 
+### This is a fork of [tomalbrc's 1.21 update](https://github.com/tomalbrc/carpet-fixes), which itself is a fork of [the original by FxMorin](https://github.com/FxMorin/carpet-fixes). It is intended to incorporate [MaxenceDC's MC-177381 fix](https://github.com/MaxenceDC/carpet-fixes-mc177381); [MC-177381](https://bugs.mojang.com/browse/MC/issues/MC-177381) causes the /locate command to return incorrect values for structures that are very far away.
+
 [![Mod Environment](https://img.shields.io/badge/Enviroment-Server-blue?style=flat-square)](https://github.com/fxmorin/carpet-fixes)
 [![Latest Minecraft Version](https://img.shields.io/badge/Latest%20MC%20Support-1.20.4-green?style=flat-square)](https://github.com/fxmorin/carpet-fixes/releases)
 
