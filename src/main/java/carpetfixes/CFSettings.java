@@ -1176,7 +1176,11 @@ public class CFSettings {
     )
     public static boolean structuresIgnorePassengersFix = false;
 
-
+    //By MaxenceDC, incorporated by clmc99
+    @Rule(
+            categories = {BUGFIX, RECOMMENDED}
+    )
+    public static boolean locateCommandDistanceFix = false;
     /*
 
     OPTIMIZATIONS
