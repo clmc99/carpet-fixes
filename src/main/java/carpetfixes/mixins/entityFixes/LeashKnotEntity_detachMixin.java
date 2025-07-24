@@ -26,7 +26,7 @@ public abstract class LeashKnotEntity_detachMixin extends Entity implements Leas
 
 
     @Override
-    public void carpet_fixes$onDetachLeash(MobEntity caller) {
+    public void onDetachLeash(MobEntity caller) {
         double d = 7.0;
         List<MobEntity> list = this.getWorld()
                 .getNonSpectatingEntities(
@@ -37,14 +37,16 @@ public abstract class LeashKnotEntity_detachMixin extends Entity implements Leas
             if (mobEntity == caller) {
                 continue;
             }
-            Entity holdingEntity = mobEntity.getLeashHolder();
-            if (holdingEntity != null && holdingEntity == this) {
+            Entity leashHolder = mobEntity.getLeashHolder();
+            if (leashHolder != null && leashHolder == this) {
                 shouldDestroy = false;
                 break;
             }
         }
         if (shouldDestroy) {
-            this.kill();
+            if (this.getWorld() instanceof net.minecraft.server.world.ServerWorld serverWorld) {
+                this.kill(serverWorld);
+            }
         }
     }
 }
