@@ -1024,12 +1024,6 @@ public class CFSettings {
     @Rule(
             categories = {BUGFIX}
     )
-    public static boolean chorusFruitFallDamageFix = false;
-
-    //By FX - PR0CESS
-    @Rule(
-            categories = {BUGFIX}
-    )
     public static boolean potionEffectsAffectDeadEntitiesFix = false;
 
     //By FX - PR0CESS
