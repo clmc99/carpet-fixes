@@ -230,7 +230,6 @@
     "goalFixes.slowedGoalFix.EatGrassGoal_slowMixin",
     "goalFixes.slowedGoalFix.EvokerEntity$SummonVexGoal_slowMixin",
     "goalFixes.slowedGoalFix.PufferfishEntity$InflateGoal_slowMixin",
-    "itemFixes.ChorusFruitItem_fallDamageMixin",
     "itemFixes.ItemPlacementContext_worldBorderMixin",
     "itemFixes.MusicDiscItem_worldEventMixin",
     "optimizations.BiomeAccess_predictionMixin",
