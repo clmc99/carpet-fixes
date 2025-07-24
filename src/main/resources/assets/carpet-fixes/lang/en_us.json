@@ -440,8 +440,6 @@
 	"carpet-fixes.rule.velocitySeparateAxisCancellingFix.extra": "[MC-241951](https://bugs.mojang.com/browse/MC-241951) & [MC-160304](https://bugs.mojang.com/browse/MC-160304)",
 	"carpet-fixes.rule.viewerCountNegativesFix.desc": "Fixes the viewer count for some inventories (chest, ender chest, barrel) being able to go into the negatives",
 	"carpet-fixes.rule.viewerCountNegativesFix.extra": "[MC-229680](https://bugs.mojang.com/browse/MC-229680) & [MC-208051](https://bugs.mojang.com/browse/MC-208051)",
-	"carpet-fixes.rule.villagerDiscountIgnoresOfflinePlayersFix.desc": "Fixes villagers not giving a discount if you log out while they are being cured",
-	"carpet-fixes.rule.villagerDiscountIgnoresOfflinePlayersFix.extra": "[MC-247647](https://bugs.mojang.com/browse/MC-247647)",
 	"carpet-fixes.rule.villagerToWitchBedOccupiedFix.desc": "Fixes villagers converting to witches while sleeping, not changing the bed occupancy",
 	"carpet-fixes.rule.villagerToWitchBedOccupiedFix.extra": "[MC-167242](https://bugs.mojang.com/browse/MC-167242)",
 	"carpet-fixes.rule.villagersDontReleaseMemoryFix.desc": "Fixes villagers not releasing there tickets & positional memories when changing dimension, causing them to attempt to pathfind to them causing insane lag",
