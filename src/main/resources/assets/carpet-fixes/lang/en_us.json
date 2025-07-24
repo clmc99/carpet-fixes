@@ -60,8 +60,6 @@
 	"carpet-fixes.rule.buriedTreasureAlwaysCenterFix.extra": "[MC-227443](https://bugs.mojang.com/browse/MC-227443)",
 	"carpet-fixes.rule.chestUsablePastWorldBorderFix.extra": "We do this by preventing chests from merging with other chests outside of the world border\n[MC-67844](https://bugs.mojang.com/browse/MC-67844)",
 	"carpet-fixes.rule.chestUsablePastWorldBorderFix.desc": "Fixes chests being accessible outside the world border by placing a chest near it",
-	"carpet-fixes.rule.chorusFruitFallDamageFix.desc": "Fixes chorus fruits item not resetting fall damage on teleport",
-	"carpet-fixes.rule.chorusFruitFallDamageFix.extra": "[MC-112133](https://bugs.mojang.com/browse/MC-112133)",
 	"carpet-fixes.rule.chunkSaveCooldownDelay.desc": "Allows you to change the chunk save cooldown added in 22w05a",
 	"carpet-fixes.rule.chunkSaveCooldownDelay.extra": "Set to 10s by default, this is the delay between chunks aggressively saving\nIf your server has large lag spikes due to chunk saving, you can raise this number.\nFor obvious reasons, this rule is disabled when `reIntroduceVeryAggressiveSaving` is enabled",
 	"carpet-fixes.rule.comparatorSkipsBlockedChestFix.desc": "Fixes comparators being unable to get the signal strength from a blocked chest",
