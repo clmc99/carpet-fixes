@@ -200,7 +200,6 @@
     "entityFixes.ZombieEntity_reinforcementCenterMixin",
     "entityFixes.ZombieEntity_reinforcementTypeMixin",
     "entityFixes.ZombieVillagerEntity_convertingMixin",
-    "entityFixes.ZombieVillagerEntity_offlinePlayerMixin",
     "entityFixes.bucketableLeashDetach.AxolotlEntity_leashDetachMixin",
     "entityFixes.bucketableLeashDetach.FishEntity_leashDetachMixin",
     "entityFixes.bucketableLeashDetach.TadpoleEntity_leashDetachMixin",
